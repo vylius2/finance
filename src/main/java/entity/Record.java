@@ -84,4 +84,6 @@ public class Record {
                 ", category: " + category.getName() +
                 ", record type: " + category.getRecordType().toString();
     }
+
+
 }

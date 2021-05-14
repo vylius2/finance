@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class RecordService {
+public class RecordService{
 
 
     public List<Record> getIncomeRecords() {
@@ -44,6 +44,21 @@ public class RecordService {
         return records;
     }
 
+    public Record getById(Long id){
+        Session session = HibernateConfig.openSession();
+        Transaction transaction = session.beginTransaction();
+        Record record = null;
+        try {
+            record = session.get(Record.class, id);
+            transaction.commit();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return record;
+    }
+
     public void save(Record record) {
         Session session = HibernateConfig.openSession();
         Transaction transaction = session.beginTransaction();
@@ -59,18 +74,8 @@ public class RecordService {
         }
     }
 
-    public void deleteRecord(Record record){
-        Session session = HibernateConfig.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        try {
-            session.delete(record);
-            transaction.commit();
-        } catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            session.close();
-        }
+    public void delete(Record record){
+        ServiceBase.delete(record);
     }
 
 

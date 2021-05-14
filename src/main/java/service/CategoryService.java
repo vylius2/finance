@@ -12,6 +12,9 @@ import java.util.List;
 
 public class CategoryService {
 
+    public void delete(Category category){
+        ServiceBase.delete(category);
+    }
     public List<Category> getAll() {
         Session session = HibernateConfig.openSession();
         Transaction transaction = session.beginTransaction();

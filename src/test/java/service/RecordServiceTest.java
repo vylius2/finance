@@ -3,13 +3,15 @@ package service;
 import entity.Category;
 import entity.Record;
 import entity.RecordType;
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecordServiceTest {
+
+    Category categoryInc;
+    Category categoryOut;
 
     private RecordService recordService;
 
@@ -32,12 +34,18 @@ public class RecordServiceTest {
     public void setUp(){
         recordService = new RecordService();
         categoryService = new CategoryService();
+
+        categoryInc = new Category("TestasInc", RecordType.INCOME);
+        categoryOut = new Category("TestasOut", RecordType.OUTCOME);
+
         records = new ArrayList<>();
+
         double amount = recordService.getTopFiveOutcomeRecords().get(0).getAmount();
+        categoryService.save(categoryInc);
+        categoryService.save(categoryOut);
         for (int i = 0; i < 5; i++) {
 
-            Record record = new Record(amount + 20000 + i,
-                    categoryService.getAll().get(1));// cia pasidaryt atskirai category
+            Record record = new Record(amount + 20000 + i, categoryOut);
 
             recordService.save(record);
             records.add(record);
@@ -47,17 +55,35 @@ public class RecordServiceTest {
 
     @AfterEach
     public void afterEach(){
-        //assert ar tikrai padelitinta
         for (Record record: records) {
-            recordService.deleteRecord(record);
+            recordService.delete(record);
         }
-        //assertNull
+        categoryService.delete(categoryInc);
+        categoryService.delete(categoryOut);
+    }
+
+
+    @Test
+    public void getByIdTest(){
+        Record record = records.get(0);
+
+        Assertions.assertEquals(recordService.getById(record.getId()).getId(), record.getId());
+    }
+
+    @Test
+    public void deleteTest(){
+        Record record = records.get(0);
+
+        recordService.delete(record);
+        Assertions.assertNull(recordService.getById(record.getId()));
     }
 
     @Test
     public void getTopFiveOutcomeRecordsTest(){
-        List<Record> topFiveRecords = records;//cia gali reikt vietoj 9 rasyt 10
-        Assert.assertEquals(recordService.getTopFiveOutcomeRecords().get(i).getAmount(),
-                topFiveRecords.get(topFiveRecords.size() - 1 - i).getAmount(), 1);
+        List<Record> topFiveRecords = records;
+        for (int i = 0; i < 5; i++) {
+            Assertions.assertEquals(recordService.getTopFiveOutcomeRecords().get(i).getAmount(),
+                    topFiveRecords.get(topFiveRecords.size() - 1 - i).getAmount(), 1);
+        }
     }
 }
