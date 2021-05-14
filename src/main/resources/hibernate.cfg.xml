@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name = "hibernate.dialect">
+            org.hibernate.dialect.PostgreSQL94Dialect
+        </property>
+
+        <property name = "hibernate.connection.driver_class">
+            org.postgresql.Driver
+        </property>
+
+        <!-- Assume test is the database name -->
+
+        <property name = "hibernate.connection.url">
+            jdbc:postgresql://localhost/finance
+        </property>
+
+        <property name = "hibernate.connection.username">
+            finance
+        </property>
+
+        <property name = "hibernate.connection.password">
+            admin
+        </property>
+
+        <property name="hibernate.show_sql">
+            true
+        </property>
+        <property name="format_sql">
+            true
+        </property>
+        <!--        NOT RECOMMENDED-->
+        <!--        <property name="hibernate.connection.autocommit">-->
+        <!--            true-->
+        <!--        </property>-->
+
+        <!-- List of XML mapping files -->
+        <mapping class="entity.Record"/>
+        <mapping class="entity.Category"/>
+        <!--        <mapping resource = "Employee.hbm.xml"/>-->
+
+    </session-factory>
+</hibernate-configuration>
