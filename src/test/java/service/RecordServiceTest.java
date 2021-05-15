@@ -44,7 +44,6 @@ public class RecordServiceTest {
         categoryService.save(categoryInc);
         categoryService.save(categoryOut);
         for (int i = 0; i < 5; i++) {
-
             Record record = new Record(amount + 20000 + i, categoryOut);
 
             recordService.save(record);
