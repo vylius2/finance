@@ -18,9 +18,11 @@ public class Main {
         RecordService recordService = new RecordService();
         CategoryService categoryService = new CategoryService();
 
-        Category category = new Category("TransportasTest", RecordType.OUTCOME);
-        Record record = new Record(recordService.getTopFiveOutcomeRecords().get(0).getAmount() + 20000 + 1,
-                categoryService.getAll().get(1));
+        categoryService.getAll().forEach();
+
+//        Category category = new Category("TransportasTest", RecordType.OUTCOME);
+//        Record record = new Record(recordService.getTopFiveOutcomeRecords().get(0).getAmount() + 20000 + 1,
+//                categoryService.getAll().get(1));
 
         System.out.println(categoryService.getAll().get(1).toString());
 //        System.out.println(record.toString() + "\n" +record.getCategory().toString());
