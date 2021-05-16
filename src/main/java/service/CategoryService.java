@@ -14,27 +14,11 @@ public class CategoryService {
     public void delete(Category category){
         ServiceBase.delete(category);
     }
-//    public List<Category> getAll() {
-//        Session session = HibernateConfig.openSession();
-//        Transaction transaction = session.beginTransaction();
-//
-//        List<Category> categories = new ArrayList<>();
-//
-//        try {
-//            //CIA VEIKIA JEIGU IR NE IDEDI GENERIC <Category>
-//            Query<Category> query = session.createNativeQuery("SELECT * FROM category", Category.class);
-//            categories = query.getResultList();
-//            transaction.commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//        return categories;
-//    }
-    public List<Object> getAll(){
-        return ServiceBase.getAll("Category");
+
+    public List<Category> getAll(){
+        return ServiceBase.getAll(Category.class);
     }
+
     public List<Category> getIncomeCategories() {
         return getCategoriesByType(RecordType.INCOME);
     }
@@ -44,19 +28,8 @@ public class CategoryService {
     }
 
     public void save(Category category) {
-        Session session = HibernateConfig.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        try {
-            session.saveOrUpdate(category);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+        ServiceBase.save(category);
     }
-
 
     private List<Category> getCategoriesByType(RecordType recordType) {
         Session session = HibernateConfig.openSession();

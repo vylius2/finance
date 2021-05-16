@@ -24,24 +24,8 @@ public class RecordService{
     }
 
 
-    public List<Record> getAllRecords() {
-        Session session = HibernateConfig.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        List<Record> records = new ArrayList<>();
-
-        try {
-
-            Query<Record> query = session.createQuery("FROM Record", Record.class);
-            transaction.commit();
-            records = query.getResultList();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return records;
+    public List<Record> getAll() {
+        return ServiceBase.getAll(Record.class);
     }
 
     public Record getById(Long id){
@@ -60,18 +44,7 @@ public class RecordService{
     }
 
     public void save(Record record) {
-        Session session = HibernateConfig.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        try {
-            session.saveOrUpdate(record);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-        } finally {
-            session.close();
-        }
+        ServiceBase.save(record);
     }
 
     public void delete(Record record){
@@ -105,7 +78,7 @@ public class RecordService{
     }
 
     private List<Record> getRecordsByType(RecordType recordType) {
-        List<Record> records = getAllRecords();
+        List<Record> records = getAll();
         List<Record> incomeRecords = new ArrayList<>();
         for (Record record : records) {
             if (record.getCategory().getRecordType().equals(recordType)) {

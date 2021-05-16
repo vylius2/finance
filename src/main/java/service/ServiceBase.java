@@ -13,23 +13,35 @@ public class ServiceBase {
 
 
 
-
-    public static List<Object> getAll(String className) {
+    public static <T> void save(T t) {
         Session session = HibernateConfig.openSession();
         Transaction transaction = session.beginTransaction();
 
-        List<Object> categories = new ArrayList<>();//Pakeist categories i list
-
         try {
-            Query<Object> query = session.createQuery("FROM " + className, Object.class);
-            categories = query.getResultList();
+            session.saveOrUpdate(t);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return categories;
+    }
+
+    public static <T> List<T> getAll(Class<T> anyClass) {
+        Session session = HibernateConfig.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<T> list = new ArrayList<>();
+        try {
+            Query<T> query = session.createQuery("FROM " + anyClass.getSimpleName(), anyClass);
+            list = query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+        return list;
     }
 
 
