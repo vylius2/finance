@@ -1,24 +1,21 @@
 package service;
 
-import entity.Category;
-import entity.Record;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceBase {
 
-    public static <T> T getById(Class<T> anyClass, Long id){
+    public static <T> T getById(Class<T> anyClass, Long id) {
         Session session = HibernateConfig.openSession();
         Transaction transaction = session.beginTransaction();
         T element = null;
         try {
             element = session.get(anyClass, id);
             transaction.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
@@ -58,16 +55,16 @@ public class ServiceBase {
     }
 
 
-    public static  <T> void delete(T t){
+    public static <T> void delete(T t) {
         Session session = HibernateConfig.openSession();
         Transaction transaction = session.beginTransaction();
 
         try {
             session.delete(t);
             transaction.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             session.close();
         }
     }

@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class CmdInterface {
 
 
-    Scanner scanner = new Scanner(System.in);//DEL SITO GALI KILT PROBLEMU!!!!!
+    Scanner scanner = new Scanner(System.in);
 
     public void start() {
         RecordService recordService = new RecordService();

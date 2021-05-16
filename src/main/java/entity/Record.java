@@ -30,12 +30,6 @@ public class Record {
         this.date = LocalDate.now();
         this.category = category;
     }
-//    public Record(Long id, double amount, Category category) {
-//        this.id = id;
-//        this.amount = amount;
-//        this.date = LocalDate.now();
-//        this.category = category;
-//    }
 
     public Record(double amount, Category categoryId, LocalDate date) {
         this.amount = amount;
