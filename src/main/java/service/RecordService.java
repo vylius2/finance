@@ -29,18 +29,7 @@ public class RecordService{
     }
 
     public Record getById(Long id){
-        Session session = HibernateConfig.openSession();
-        Transaction transaction = session.beginTransaction();
-        Record record = null;
-        try {
-            record = session.get(Record.class, id);
-            transaction.commit();
-        } catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return record;
+        return ServiceBase.getById(Record.class, id);
     }
 
     public void save(Record record) {

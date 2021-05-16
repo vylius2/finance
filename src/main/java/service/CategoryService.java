@@ -31,6 +31,10 @@ public class CategoryService {
         ServiceBase.save(category);
     }
 
+    public Category getById(Long id){
+        return ServiceBase.getById(Category.class, id);
+    }
+
     private List<Category> getCategoriesByType(RecordType recordType) {
         Session session = HibernateConfig.openSession();
         Transaction transaction = session.beginTransaction();
